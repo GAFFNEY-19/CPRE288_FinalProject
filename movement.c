@@ -12,6 +12,16 @@ double move_forward(oi_t *sensor, float centimeters){
             oi_setWheels(0, 0);
             return 0;
             }
+        if(sensor_data->bumpLeft || sensor_data->bumpright || sensor_data->cliffLeft || sensor_data->cliffRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight){
+	        sensor(sensor_data);
+	        oi_setwheels(0, 0);
+            }
+        timer_waitMillis(5);
+        oi_update(sensor_data);
+        if(sensor_data->cliffLeft > 4095 || sensor_data->cliffRight > 4095 || sensor_data->cliffFrontLeft > 4095 || sensor_data->cliffFrontRight > 4095){
+	        sensor(sensor_data);
+	        oi_setwheels(0, 0);
+            }
         distance += sensor->distance;
         }
        oi_setWheels(0, 0);
